@@ -9,10 +9,9 @@ def part_one(the_input):
             totals[i] += int(line[i])
     gamma = 0
     epsilon = 0
-    size = len(the_input)
     binary = 1
     for i in range(11, -1, -1): 
-        if totals[i] > size / 2:
+        if totals[i] > len(the_input) / 2:
             gamma += binary
         else:
             epsilon += binary
@@ -23,9 +22,11 @@ def part_one(the_input):
 
 
 def part_two(the_input):
-    saved_list = the_input.copy()
+    co2_list = the_input.copy()
     oxygen_rating = 0
     co2_rating = 0
+
+    #oxygen rating stuff
     for i in range(12):
         total = 0
         most_common = most_common_bit(the_input, i)
@@ -39,19 +40,21 @@ def part_two(the_input):
             oxygen_rating = string_to_binary(the_input[0])
             print(f"Found {oxygen_rating} as the decimal")
             break
-    the_input = saved_list
+
+    #co2 rating stuff
     for i in range(12):
-        least_common = least_common_bit(the_input, i) 
+        least_common = least_common_bit(co2_list, i) 
         new_input = list()
-        for line in the_input:
+        for line in co2_list:
             if int(line[i]) == least_common:
                 new_input.append(line)
-        the_input = new_input
-        if len(the_input) == 1: 
-            print(f"Found {the_input} as winner")
-            co2_rating = string_to_binary(the_input[0])
+        co2_list = new_input
+        if len(co2_list) == 1: 
+            print(f"Found {co2_list} as winner")
+            co2_rating = string_to_binary(co2_list[0])
             print(f"Found {co2_rating} as the decimal")
             break
+
     return oxygen_rating*co2_rating
 
 def most_common_bit(binary_list, position):
