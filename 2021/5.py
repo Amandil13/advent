@@ -40,7 +40,6 @@ def draw_line(grid,vector,diagonals):
     return grid
 
 def score_grid(grid): 
-    score = 0
     values = list(grid.values())
     return len(grid) - values.count(1)
 
