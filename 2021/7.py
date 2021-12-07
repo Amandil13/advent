@@ -21,6 +21,7 @@ def search_for_best_fuel(crabs,increment,guess,fuel_function):
         best_fuel = test_fuel
         guess = guess + increment
         test_fuel = fuel_function(crabs,guess + increment) 
+    print(f"best spot for {increment} is {guess}")
     return best_fuel
 
 if __name__ == "__main__":
@@ -30,13 +31,14 @@ if __name__ == "__main__":
         for line in f.read().rstrip().split(','):
             crabs.append(int(line))
 
-    #These are good gueses to start with, median for part 1, average for part 2
+    #These are good gueses to start with
     median = median(crabs)
-    average = round(sum(crabs)/len(crabs),0)
+    average = int(round(sum(crabs)/len(crabs),0))
+    print(f"Average: {average}")
 
     best_fuel_part_one = min(search_for_best_fuel(crabs,1,median,calculate_fuel_one), search_for_best_fuel(crabs,-1,median,calculate_fuel_one))
-    best_fuel_part_two = min(search_for_best_fuel(crabs,1,median,calculate_fuel_two), search_for_best_fuel(crabs,-1,median,calculate_fuel_two))
+    best_fuel_part_two = min(search_for_best_fuel(crabs,1,average,calculate_fuel_two), search_for_best_fuel(crabs,-1,average,calculate_fuel_two))
 
     print(f"Part one: {best_fuel_part_one}")
-    print(f"Part one: {best_fuel_part_two}")
+    print(f"Part two: {best_fuel_part_two}")
 
