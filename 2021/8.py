@@ -53,51 +53,46 @@ def fix_display(good_display_stats,bad_display):
                 continue
     return fixed_display
 
-def part_one(number_stats): 
+
+def decode_output(number_stats): 
     output_values = list()
     with open('8.in') as f:
         for line in f:
+            #Parse and process the display
             display = dict()
             display_blob,output_blob = line.split('|')
             i = 0
             for d in display_blob.split(): 
-                sorted_d = sorted(d)
-                display[i] = "".join(sorted_d)
+                display[i] = sort_string(d)
                 i += 1
             display = fix_display(number_stats,display)
-            for output in output_blob.split(): 
-                sorted_output = sorted(output)
-                output = "".join(sorted_output)
-                for item,value in display.items(): 
-                    if output == value: 
-                        output_values.append(item)
-                        continue
-    return output_values.count(1) + output_values.count(4) + output_values.count(7) + output_values.count(8)                
 
-
-def part_two(number_stats): 
-    output_values = list()
-    with open('8.in') as f:
-        for line in f:
-            display = dict()
-            display_blob,output_blob = line.split('|')
-            i = 0
-            for d in display_blob.split(): 
-                sorted_d = sorted(d)
-                display[i] = "".join(sorted_d)
-                i += 1
-            display = fix_display(number_stats,display)
+            #Parse and process output
             number = ""
             for output in output_blob.split(): 
-                sorted_output = sorted(output)
-                output = "".join(sorted_output)
+                output = sort_string(output)
                 for item,value in display.items(): 
                     if output == value: 
                         number += str(item)
                         continue
             output_values.append(int(number))
 
-    return sum(output_values)
+    return output_values
+
+def sort_string(string): 
+    sorted_string = sorted(string)
+    return "".join(sorted_string)
+
+def part_one(output):
+    total = 0
+    for line in output: 
+        line = str(line)
+        total += line.count('1') + line.count('4') + line.count('7') + line.count('8')                
+    return total
+
+
+def part_two(output): 
+    return sum(output)
 
 
 if __name__ == "__main__":
@@ -116,8 +111,9 @@ if __name__ == "__main__":
         0: 'abcefg'
     }
     number_stats = generate_stats(number_display)
+    output = decode_output(number_stats)
     
-    answer_part_one = part_one(number_stats)
+    answer_part_one = part_one(output)
     print(f"Part one:\n{answer_part_one}") 
-    answer_part_two = part_two(number_stats)
+    answer_part_two = part_two(output)
     print(f"Part two:\n{answer_part_two}") 
