@@ -47,6 +47,7 @@ def power_up(octopi,point,flashes):
         flash_neighbors(octopi,point,flashes)
 
 def flash_neighbors(octopi,point,flashes): 
+    #( • )( • )
     flashes[point] = 1
     for x in (-1,0,1): 
         for y in (-1,0,1): 
