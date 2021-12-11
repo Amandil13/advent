@@ -1,13 +1,10 @@
 #!/usr/bin/boithon
-from collections import namedtuple
+from collections import namedtuple,defaultdict
 
 
 def part_one(octopi):
-    flashes = dict()
-    for point in octopi.keys(): 
-        flashes[point] = 0;
+    flashes = defaultdict(int)
     total_flashes = 0
-
     for i in range(100): 
         for point in octopi.keys(): 
             power_up(octopi,point,flashes)
@@ -20,10 +17,7 @@ def part_one(octopi):
     return total_flashes
 
 def part_two(octopi):
-    flashes = dict()
-    for point in octopi.keys(): 
-        flashes[point] = 0;
-
+    flashes = defaultdict(int)
     for i in range(9999): 
         all_flashed = 1
         for point in octopi.keys(): 
@@ -34,7 +28,7 @@ def part_two(octopi):
                 flashes[point] = 0
             else: 
                 all_flashed = 0
-        if all_flashed == 1:
+        if all_flashed == 1 and len([*flashes.keys()]) == len([*octopi.keys()]):
             return i + 1
     return "1000 cycles and no end?"
 
